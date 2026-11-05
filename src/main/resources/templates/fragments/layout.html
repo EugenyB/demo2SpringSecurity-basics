@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' | Security Demo'">Security Demo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:fragment="navbar" class="navbar">
+    <a class="brand" th:href="@{/}">🔐 Security Demo</a>
+
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a th:if="${currentUser != null}" th:href="@{/guest}">Guest</a>
+        <a th:if="${currentUser != null and currentUser.hasAnyRole('USER', 'ADMIN')}" th:href="@{/user}">User</a>
+        <a th:if="${currentUser != null and currentUser.hasRole('ADMIN')}" th:href="@{/admin}">Admin</a>
+    </nav>
+
+    <div class="nav-auth">
+        <th:block th:if="${currentUser != null}">
+            <span class="nav-user">
+                <strong th:text="${currentUser.username}">name</strong>
+                <span class="badge" th:each="r : ${currentUser.roles}" th:text="${r}"
+                      th:classappend="'badge-' + ${#strings.toLowerCase(r)}">ROLE</span>
+            </span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline">Log out</button>
+            </form>
+        </th:block>
+        <a th:if="${currentUser == null}" th:href="@{/login}" class="btn btn-primary">Log in</a>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="footer">
+    <p>Spring Security demo &middot; Spring Boot &amp; Thymeleaf</p>
+</footer>
+
+</body>
+</html>

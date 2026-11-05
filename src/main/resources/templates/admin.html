@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Admin')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <section class="panel">
+        <h1>Admin area</h1>
+        <p>
+            Hello, <strong th:text="${currentUser.username}">admin</strong>.
+            This page requires the <code>ADMIN</code> role.
+        </p>
+
+        <h2>Registered accounts</h2>
+        <table class="table">
+            <thead>
+            <tr><th>Username</th><th>Role</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="account : ${accounts}">
+                <td th:text="${account.username}">name</td>
+                <td>
+                    <span class="badge" th:text="${account.role}"
+                          th:classappend="'badge-' + ${#strings.toLowerCase(account.role)}">ROLE</span>
+                </td>
+                <td th:text="${account.description}">description</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

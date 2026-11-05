@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('User')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <section class="panel">
+        <h1>User area</h1>
+        <p>
+            Hello, <strong th:text="${currentUser.username}">user</strong>.
+            This page requires the <code>USER</code> or <code>ADMIN</code> role.
+            Guests are redirected to the "Access denied" page.
+        </p>
+        <p>Your roles:
+            <span class="badge" th:each="r : ${currentUser.roles}" th:text="${r}"
+                  th:classappend="'badge-' + ${#strings.toLowerCase(r)}">ROLE</span>
+        </p>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <section class="hero">
+        <h1>Spring Security Demo</h1>
+        <p th:if="${currentUser == null}">
+            This page is public. Log in to see the sections available for your role.
+        </p>
+        <p th:if="${currentUser != null}">
+            Welcome back, <strong th:text="${currentUser.username}">user</strong>!
+        </p>
+        <a th:if="${currentUser == null}" th:href="@{/login}" class="btn btn-primary">Log in</a>
+    </section>
+
+    <section class="cards">
+        <article class="card">
+            <h2>Guest area</h2>
+            <p>Available to <span class="badge badge-guest">GUEST</span>
+                <span class="badge badge-user">USER</span>
+                <span class="badge badge-admin">ADMIN</span></p>
+            <a th:href="@{/guest}" class="btn btn-outline">Open</a>
+        </article>
+
+        <article class="card">
+            <h2>User area</h2>
+            <p>Available to <span class="badge badge-user">USER</span>
+                <span class="badge badge-admin">ADMIN</span></p>
+            <a th:href="@{/user}" class="btn btn-outline">Open</a>
+        </article>
+
+        <article class="card">
+            <h2>Admin area</h2>
+            <p>Available to <span class="badge badge-admin">ADMIN</span></p>
+            <a th:href="@{/admin}" class="btn btn-outline">Open</a>
+        </article>
+    </section>
+
+    <section class="panel" th:if="${currentUser == null}">
+        <h2>Demo accounts</h2>
+        <table class="table">
+            <thead>
+            <tr><th>Username</th><th>Password</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>admin</td><td>admin123</td><td><span class="badge badge-admin">ADMIN</span></td></tr>
+            <tr><td>user</td><td>user123</td><td><span class="badge badge-user">USER</span></td></tr>
+            <tr><td>guest</td><td>guest123</td><td><span class="badge badge-guest">GUEST</span></td></tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
