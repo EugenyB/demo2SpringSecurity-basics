@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Makes the current user available to every template as {@code currentUser}.
@@ -24,7 +25,7 @@ public class GlobalModelAdvice {
         }
 
         List<String> roles = authentication.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
+                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
             .map(a -> a.startsWith("ROLE_") ? a.substring(5) : a)
             .sorted()
             .toList();
