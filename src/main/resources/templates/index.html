@@ -1,49 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<head th:replace="~{fragments/layout :: head(#{page.home})}"></head>
 <body>
 <header th:replace="~{fragments/layout :: navbar}"></header>
 
 <main class="container">
     <section class="hero">
-        <h1>Spring Security Demo</h1>
-        <p th:if="${currentUser == null}">
+        <h1>[[#{home.title}]]</h1>
+        <p th:if="${currentUser == null}" th:text="#{home.subtitle.unauthenticated}">
             This page is public. Log in to see the sections available for your role.
         </p>
-        <p th:if="${currentUser != null}">
-            Welcome back, <strong th:text="${currentUser.username}">user</strong>!
+        <p th:if="${currentUser != null}" th:text="#{home.subtitle.authenticated(${currentUser.username})}">
+            Welcome back, user!
         </p>
-        <a th:if="${currentUser == null}" th:href="@{/login}" class="btn btn-primary">Log in</a>
+        <a th:if="${currentUser == null}" th:href="@{/login}" class="btn btn-primary">[[#{home.btn.login}]]</a>
     </section>
 
     <section class="cards">
         <article class="card">
-            <h2>Guest area</h2>
-            <p>Available to <span class="badge badge-guest">GUEST</span>
-                <span class="badge badge-user">USER</span>
-                <span class="badge badge-admin">ADMIN</span></p>
-            <a th:href="@{/guest}" class="btn btn-outline">Open</a>
+            <h2>[[#{card.guest.title}]]</h2>
+            <p th:text="#{card.guest.roles}">Available to GUEST, USER, ADMIN</p>
+            <a th:href="@{/guest}" class="btn btn-outline">[[#{card.guest.btn}]]</a>
         </article>
 
         <article class="card">
-            <h2>User area</h2>
-            <p>Available to <span class="badge badge-user">USER</span>
-                <span class="badge badge-admin">ADMIN</span></p>
-            <a th:href="@{/user}" class="btn btn-outline">Open</a>
+            <h2>[[#{card.user.title}]]</h2>
+            <p th:text="#{card.user.roles}">Available to USER, ADMIN</p>
+            <a th:href="@{/user}" class="btn btn-outline">[[#{card.user.btn}]]</a>
         </article>
 
         <article class="card">
-            <h2>Admin area</h2>
-            <p>Available to <span class="badge badge-admin">ADMIN</span></p>
-            <a th:href="@{/admin}" class="btn btn-outline">Open</a>
+            <h2>[[#{card.admin.title}]]</h2>
+            <p th:text="#{card.admin.roles}">Available to ADMIN</p>
+            <a th:href="@{/admin}" class="btn btn-outline">[[#{card.admin.btn}]]</a>
         </article>
     </section>
 
     <section class="panel" th:if="${currentUser == null}">
-        <h2>Demo accounts</h2>
+        <h2>[[#{home.demo-accounts}]]</h2>
         <table class="table">
             <thead>
-            <tr><th>Username</th><th>Password</th><th>Role</th></tr>
+            <tr><th th:text="#{home.table.username}">Username</th><th th:text="#{home.table.password}">Password</th><th th:text="#{home.table.role}">Role</th></tr>
             </thead>
             <tbody>
             <tr><td>admin</td><td>admin123</td><td><span class="badge badge-admin">ADMIN</span></td></tr>

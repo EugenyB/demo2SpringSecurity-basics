@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Guest')}"></head>
+<head th:replace="~{fragments/layout :: head(#{page.guest})}"></head>
 <body>
 <header th:replace="~{fragments/layout :: navbar}"></header>
 
 <main class="container">
     <section class="panel">
-        <h1>Guest area</h1>
-        <p>
-            Hello, <strong th:text="${currentUser.username}">guest</strong>.
-            Every authenticated user (<code>GUEST</code>, <code>USER</code>, <code>ADMIN</code>)
-            can read this page.
+        <h1>[[#{guest.title}]]</h1>
+        <p th:text="#{guest.greeting(${currentUser.username})}">
+            Hello, guest. Every authenticated user can read this page.
         </p>
-        <p>Your roles:
+        <p>[[#{guest.roles}]]
             <span class="badge" th:each="r : ${currentUser.roles}" th:text="${r}"
                   th:classappend="'badge-' + ${#strings.toLowerCase(r)}">ROLE</span>
         </p>

@@ -3,19 +3,19 @@
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${title} + ' | Security Demo'">Security Demo</title>
+    <title th:text="${title} + ' | ' + #{app.title}">Security Demo</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <header th:fragment="navbar" class="navbar">
-    <a class="brand" th:href="@{/}">🔐 Security Demo</a>
+    <a class="brand" th:href="@{/}">[[#{app.name}]]</a>
 
     <nav class="nav-links">
-        <a th:href="@{/}">Home</a>
-        <a th:if="${currentUser != null}" th:href="@{/guest}">Guest</a>
-        <a th:if="${currentUser != null and currentUser.hasAnyRole('USER', 'ADMIN')}" th:href="@{/user}">User</a>
-        <a th:if="${currentUser != null and currentUser.hasRole('ADMIN')}" th:href="@{/admin}">Admin</a>
+        <a th:href="@{/}">[[#{nav.home}]]</a>
+        <a th:if="${currentUser != null}" th:href="@{/guest}">[[#{nav.guest}]]</a>
+        <a th:if="${currentUser != null and currentUser.hasAnyRole('USER', 'ADMIN')}" th:href="@{/user}">[[#{nav.user}]]</a>
+        <a th:if="${currentUser != null and currentUser.hasRole('ADMIN')}" th:href="@{/admin}">[[#{nav.admin}]]</a>
     </nav>
 
     <div class="nav-auth">
@@ -26,15 +26,19 @@
                       th:classappend="'badge-' + ${#strings.toLowerCase(r)}">ROLE</span>
             </span>
             <form th:action="@{/logout}" method="post">
-                <button type="submit" class="btn btn-outline">Log out</button>
+                <button type="submit" class="btn btn-outline">[[#{nav.logout}]]</button>
             </form>
         </th:block>
-        <a th:if="${currentUser == null}" th:href="@{/login}" class="btn btn-primary">Log in</a>
+        <a th:if="${currentUser == null}" th:href="@{/login}" class="btn btn-primary">[[#{nav.login}]]</a>
+        <select onchange="location.href='?lang=' + this.value" class="lang-selector">
+            <option value="en" th:selected="${#locale.language == 'en'}">English</option>
+            <option value="uk" th:selected="${#locale.language == 'uk'}">Українська</option>
+        </select>
     </div>
 </header>
 
 <footer th:fragment="footer" class="footer">
-    <p>Spring Security demo &middot; Spring Boot &amp; Thymeleaf</p>
+    <p th:text="#{footer.text}">Spring Security demo · Spring Boot & Thymeleaf</p>
 </footer>
 
 </body>

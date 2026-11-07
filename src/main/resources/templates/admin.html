@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Admin')}"></head>
+<head th:replace="~{fragments/layout :: head(#{page.admin})}"></head>
 <body>
 <header th:replace="~{fragments/layout :: navbar}"></header>
 
 <main class="container">
     <section class="panel">
-        <h1>Admin area</h1>
-        <p>
-            Hello, <strong th:text="${currentUser.username}">admin</strong>.
-            This page requires the <code>ADMIN</code> role.
+        <h1>[[#{admin.title}]]</h1>
+        <p th:text="#{admin.greeting(${currentUser.username})}">
+            Hello, admin. This page requires the ADMIN role.
         </p>
 
-        <h2>Registered accounts</h2>
+        <h2>[[#{admin.accounts}]]</h2>
         <table class="table">
             <thead>
-            <tr><th>Username</th><th>Role</th><th>Description</th></tr>
+            <tr><th th:text="#{admin.table.username}">Username</th><th th:text="#{admin.table.role}">Role</th><th th:text="#{admin.table.description}">Description</th></tr>
             </thead>
             <tbody>
             <tr th:each="account : ${accounts}">
